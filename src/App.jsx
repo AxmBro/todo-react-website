@@ -9,7 +9,6 @@ function App() {
     const lists = localStorage.getItem("lists");
     return lists ? JSON.parse(lists) : localStorage.setItem("lists", JSON.stringify([]));;
   });
-  // console.log(lists);
   return (
     <>
       <ListsContext.Provider value={{ lists, setLists }}>
@@ -23,8 +22,6 @@ function App() {
             <Todo key={list} title={"test"} localStoragePrefix={list}></Todo>
           );
         })}
-        {/* <Todo title={"Irl"} localStoragePrefix={"tasks1"}></Todo>
-        <Todo title={"Work"} localStoragePrefix={"tasks2"}></Todo> */}
       </ListsContext.Provider>
     </>
   );
