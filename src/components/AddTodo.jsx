@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react";
 import { ListsContext } from "../contexts/ListsContext";
+import styles from "./AddTodo.module.css";
 
 function AddTodo() {
   const [input, setInput] = useState("");
-  const { setLists } = useContext(ListsContext);
+  const { lists, setLists } = useContext(ListsContext);
 
   const addNewList = (event) => {
     event.preventDefault();
+    if (!input) return;
     setLists((prev) => {
-      const updatedLists = [...prev, input];
+      const listId = lists.length ? lists[lists.length - 1].id + 1 : 1;
+      const newUpdatedList = { id: listId, name: input };
+      const updatedLists = [...prev, newUpdatedList];
       localStorage.setItem("lists", JSON.stringify(updatedLists));
       return updatedLists;
     });
@@ -21,16 +25,18 @@ function AddTodo() {
 
   return (
     <>
-      <form action="" onSubmit={addNewList}>
-        <label htmlFor="addNewTodo">{"Add New Todo List: "}</label>
-        <input
-          type="text"
-          name="addNewTodo"
-          value={input}
-          onChange={handleInputChange}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      <div className={styles.addTodo}>
+        <form action="" onSubmit={addNewList}>
+          <input
+            placeholder="Add New Todo List"
+            type="text"
+            name="addNewTodo"
+            value={input}
+            onChange={handleInputChange}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </>
   );
 }

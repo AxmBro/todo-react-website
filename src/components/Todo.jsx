@@ -1,7 +1,34 @@
-import React, { useEffect, useState } from "react";
-import "./Todo.css";
+import React, { useEffect, useState, useContext } from "react";
+import styles from "./Todo.module.css";
+import { ListsContext } from "../contexts/ListsContext";
+import { AddTodo } from "./AddTodo";
 
-function Todo({ localStoragePrefix, title }) {
+function TodoContainer() {
+  const { lists } = useContext(ListsContext);
+  return (
+    <>
+      <div className={styles.headerContainer}>
+        <h1 className={styles.header}>ToDo Lists:</h1>
+        <AddTodo />
+        <div className={styles.todoGridContainer}>
+          {lists.map((list) => {
+            return (
+              <Todo
+                key={`${list.name}${list.id}`}
+                title={list.name}
+                listId={list.id}
+                localStoragePrefix={`${list.name}${list.id}`}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Todo({ localStoragePrefix, title, listId }) {
+  const { lists, setLists } = useContext(ListsContext);
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState(() => {
     const tasks = localStorage.getItem(localStoragePrefix);
@@ -27,24 +54,41 @@ function Todo({ localStoragePrefix, title }) {
     setValue("");
   };
 
+  const handleRemoveList = () => {
+    setLists(lists.filter((item) => item.id !== listId));
+    localStorage.removeItem(localStoragePrefix);
+    if (lists.length === 1) localStorage.setItem("lists", "[]");
+  };
+
   useEffect(() => {
     localStorage.setItem(localStoragePrefix, JSON.stringify(tasks));
   }, [tasks]);
 
+  useEffect(() => {
+    localStorage.setItem("lists", JSON.stringify(lists));
+  }, [lists]);
+
   return (
     <>
-      <form action="" onSubmit={handleAddTask}>
-        <label htmlFor={`input${localStoragePrefix}`}>{`${title}: `}</label>
-        <input
-          type="text"
-          name={`input${localStoragePrefix}`}
-          id={`title${localStoragePrefix}`}
-          value={value}
-          onChange={handleChangeInput}
-        />
-        <button type="submit">submit</button>
+      <div className={styles.todoContainer}>
+        <div className={styles.titleContainer}>
+          <h2>{`${title}: `}</h2>
+          <button onClick={handleRemoveList}>X</button>
+        </div>
+        <div className={styles.todoAddNewTaskContainer}>
+          <input
+            placeholder="Add new task"
+            className={styles.todoAddNewTaskInput}
+            type="text"
+            name={`input${localStoragePrefix}`}
+            id={`title${localStoragePrefix}`}
+            value={value}
+            onChange={handleChangeInput}
+          />
+          <button onClick={handleAddTask}>submit</button>
+        </div>
         {tasks && (
-          <ul>
+          <ul className={styles.ul}>
             {tasks.map((item, index) => {
               return (
                 <TaskItem
@@ -58,14 +102,13 @@ function Todo({ localStoragePrefix, title }) {
             })}
           </ul>
         )}
-      </form>
+      </div>
     </>
   );
 }
 
 function TaskItem({ task, tasks, setTasks, index }) {
-  const handleRemoveTask = (event) => {
-    event.preventDefault();
+  const handleRemoveTask = () => {
     setTasks(tasks.filter((item) => item.id !== task.id));
   };
 
@@ -76,17 +119,27 @@ function TaskItem({ task, tasks, setTasks, index }) {
     setTasks(updatedTasks);
   };
 
+  const checkedStyle = {
+    opacity: 0.5,
+    textDecoration: "line-through",
+  };
+
   return (
-    <li>
-      <input
-        type="checkbox"
-        onChange={handleCheckChange}
-        checked={task.checked || false}
-      />
-      {`ID: ${index + 1}, TASK: ${task.task}`}{" "}
+    <div className={styles.taskItemContainer}>
+      <div className={styles.container}>
+        <input
+          type="checkbox"
+          onChange={handleCheckChange}
+          checked={task.checked || false}
+        />
+        <p style={task.checked ? checkedStyle : {}}>
+          {/* {`ID: ${index + 1}, TASK: ${task.task}`}{" "} */}
+          {`${task.task}`}{" "}
+        </p>
+      </div>
       <button onClick={handleRemoveTask}>X</button>
-    </li>
+    </div>
   );
 }
 
-export { Todo };
+export { TodoContainer, Todo };
