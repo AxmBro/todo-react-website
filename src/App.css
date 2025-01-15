@@ -20,7 +20,7 @@ main {
   padding: 0 2rem;
 }
 
-*:focus {
+/* *:focus {
   background-color: red !important;
   border: 1px red solid !important;
-}
+} */

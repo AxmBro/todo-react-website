@@ -13,7 +13,7 @@ function TodoContainer() {
         <div className={styles.todoGridContainer}>
           {lists.map((list) => {
             return (
-              <Todo
+              <TodoItem
                 key={`${list.name}${list.id}`}
                 title={list.name}
                 listId={list.id}
@@ -27,7 +27,7 @@ function TodoContainer() {
   );
 }
 
-function Todo({ localStoragePrefix, title, listId }) {
+function TodoItem({ localStoragePrefix, title, listId }) {
   const { lists, setLists } = useContext(ListsContext);
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState(() => {
@@ -91,7 +91,7 @@ function Todo({ localStoragePrefix, title, listId }) {
           <ul className={styles.ul}>
             {tasks.map((item, index) => {
               return (
-                <TaskItem
+                <TodoTaskItem
                   key={item.id}
                   task={item}
                   tasks={tasks}
@@ -107,7 +107,7 @@ function Todo({ localStoragePrefix, title, listId }) {
   );
 }
 
-function TaskItem({ task, tasks, setTasks, index }) {
+function TodoTaskItem({ task, tasks, setTasks, index }) {
   const handleRemoveTask = () => {
     setTasks(tasks.filter((item) => item.id !== task.id));
   };
@@ -142,4 +142,4 @@ function TaskItem({ task, tasks, setTasks, index }) {
   );
 }
 
-export { TodoContainer, Todo };
+export { TodoContainer };
