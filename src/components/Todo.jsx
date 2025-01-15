@@ -8,6 +8,7 @@ function TodoContainer() {
     <>
       <div className={styles.headerContainer}>
         <h1 className={styles.header}>ToDo Lists:</h1>
+        <p>Simple todo website created using react and vite. All created lists and content inside is saved using local storage.</p>
         <AddTodo />
         <div className={styles.todoGridContainer}>
           {lists.map((list) => {
@@ -28,29 +29,29 @@ function TodoContainer() {
 
 function TodoItem({ localStoragePrefix, title, listId }) {
   const { lists, setLists } = useContext(ListsContext);
-  const [value, setValue] = useState("");
+  const [input, setInput] = useState("");
   const [tasks, setTasks] = useState(() => {
     const tasks = localStorage.getItem(localStoragePrefix);
     return tasks ? JSON.parse(tasks) : [];
   });
 
   const handleChangeInput = ({ target }) => {
-    setValue(target.value);
+    setInput(target.value);
   };
 
   const handleAddTask = (event) => {
     event.preventDefault();
-    if (!value) return;
+    if (!input) return;
 
     const taskId = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
-    const newTask = { id: taskId, task: value, checked: false };
+    const newTask = { id: taskId, task: input, checked: false };
     setTasks((prev) => {
       const updatedTasks = [...prev, newTask];
       localStorage.setItem(localStoragePrefix, JSON.stringify(updatedTasks));
       return updatedTasks;
     });
 
-    setValue("");
+    setInput("");
   };
 
   const handleRemoveList = () => {
@@ -81,7 +82,7 @@ function TodoItem({ localStoragePrefix, title, listId }) {
             type="text"
             name={`input${localStoragePrefix}`}
             id={`title${localStoragePrefix}`}
-            value={value}
+            value={input}
             onChange={handleChangeInput}
           />
           <button onClick={handleAddTask}>submit</button>

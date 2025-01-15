@@ -112,6 +112,10 @@
   color: red;
 }
 
+.addTodo {
+  padding-top: 0.5rem;
+}
+
 .addTodo button {
   height: 2rem;
   margin: 0;
@@ -130,4 +134,8 @@
   border: 0;
   flex: 1;
   box-sizing: border-box;
+}
+
+p {
+  margin: 0;
 }
