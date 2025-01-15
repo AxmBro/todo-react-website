@@ -8,10 +8,11 @@
 }
 
 .todoGridContainer {
-  grid-template-columns: repeat(3, minmax(50px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 1rem;
   display: grid;
   padding-top: 3rem;
+  justify-content: center;
 }
 
 .headerContainer {
