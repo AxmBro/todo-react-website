@@ -80,7 +80,7 @@ function TodoItem({ localStoragePrefix, title, listId, index }) {
       <div className={styles.todoContainer}>
         <div className={styles.titleContainer}>
           <h2 className={styles.title}>
-            {`${index + 1}. ${title}, ID: ${listId}`}{" "}
+            {`${index + 1}. ${title}`}{" "}
             <span className={styles.idText}>{`ID: ${listId}`}</span>
           </h2>
           <div className={styles.titleButtonsContainer}>
