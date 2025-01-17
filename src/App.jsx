@@ -15,9 +15,11 @@ function App() {
     <>
       <ListsContext.Provider value={{ lists, setLists }}>
         <Header />
-        <main>
-          <TodoContainer />
-        </main>
+        <div className="mainContrainer">
+          <main>
+            <TodoContainer />
+          </main>
+        </div>
       </ListsContext.Provider>
     </>
   );

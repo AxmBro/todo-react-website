@@ -16,6 +16,14 @@ li {
   color: rgb(255, 255, 255);
 }
 
-main {
+.mainContrainer {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  width: 100%;
   padding: 0 1rem;
+}
+
+main {
+  width: clamp(0px, 100rem, 100%);
 }

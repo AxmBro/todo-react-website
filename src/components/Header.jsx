@@ -4,9 +4,11 @@ import styles from "./Header.module.css";
 function Header() {
   return (
     <>
-    <div className={styles.headerContainer}>
-      <h1>ToDo</h1>
-    </div>
+      <div className={styles.headerContainer}>
+        <div className={styles.header}>
+          <h1>ToDo</h1>
+        </div>
+      </div>
     </>
   );
 }

@@ -3,12 +3,11 @@
   border: 1px solid rgb(40, 40, 40);
 }
 
-.header {
+h1 {
   margin: 0;
 }
 
 .todoGridContainer {
-  /* grid-template-columns: repeat(3, minmax(300px, 1fr)); */
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 2rem;
   display: grid;
@@ -17,7 +16,7 @@
 }
 
 .headerContainer {
-  padding: 1rem 0;
+  padding-top: 2rem;
 }
 
 .todoAddNewTaskContainer {
@@ -47,22 +46,16 @@
 .taskItemContainer {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgb(40, 40, 40);
+  /* border-bottom: 1px solid rgb(40, 40, 40); */
 }
 
 .taskItemContainer button {
   width: 2rem;
   background-color: transparent;
-  color: white;
   margin: 0.5rem 0;
   border: 0;
   align-self: flex-start;
   flex-shrink: 0;
-}
-
-.taskItemContainer button:hover {
-  cursor: pointer;
-  color: red;
 }
 
 .taskItemContainer .container {
@@ -88,15 +81,10 @@
   height: 1rem;
   width: 2rem;
   background-color: transparent;
-  color: white;
   margin: 0.5rem 0;
   border: 0;
   align-self: flex-start;
   flex-shrink: 0;
-}
-
-.titleContainer button:hover {
-  cursor: pointer;
   color: red;
 }
 
@@ -139,6 +127,23 @@ p {
 .moveOptionsContainer > *:hover {
   cursor: pointer;
   color: red;
+}
+
+.XButton {
+  color: rgb(80, 80, 80);
+}
+
+.XButton:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.moveOptionsArrows {
+  color: rgb(80, 80, 80);
+}
+
+.moveOptionsArrows:hover {
+  color: rgb(255, 255, 255);
 }
 
 @media (min-width: 1300px) {

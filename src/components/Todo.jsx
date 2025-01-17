@@ -9,11 +9,12 @@ function TodoContainer() {
   return (
     <>
       <div className={styles.headerContainer}>
-        <h1 className={styles.header}>ToDo Lists:</h1>
+        <h1>ToDo Lists:</h1>
         <p>
           Simple todo website created using react and vite. All created lists
           and content inside is saved using local storage.
         </p>
+        <h1 style={{paddingTop: "2rem"}}>Lists:</h1>
         <AddTodo />
         <div className={styles.todoGridContainer}>
           {lists.map((list, index) => {
@@ -83,7 +84,9 @@ function TodoItem({ localStoragePrefix, title, listId, index }) {
           }. ${title}, ID: ${listId}`}</h2>
           <div className={styles.titleButtonsContainer}>
             <TodoMoveOptions currentIndex={index} />
-            <button onClick={handleRemoveList}>X</button>
+            <button onClick={handleRemoveList} className={styles.XButton}>
+              X
+            </button>
           </div>
         </div>
         <div className={styles.todoAddNewTaskContainer}>
@@ -99,13 +102,15 @@ function TodoItem({ localStoragePrefix, title, listId, index }) {
               onChange={handleChangeInput}
             />
           </div>
-          <button
-            onClick={handleAddTask}
-            className={buttonStyles.buttonSubmit}
-            style={{ borderLeft: 0 }}
-          >
-            Add
-          </button>
+          {input && (
+            <button
+              onClick={handleAddTask}
+              className={buttonStyles.buttonSubmit}
+              style={{ borderLeft: 0 }}
+            >
+              Add
+            </button>
+          )}
         </div>
         {tasks && (
           <ul className={styles.ul}>
@@ -157,7 +162,9 @@ function TodoTaskItem({ task, tasks, setTasks, index }) {
           {`${task.task}`}{" "}
         </p>
       </div>
-      <button onClick={handleRemoveTask}>X</button>
+      <button onClick={handleRemoveTask} className={styles.XButton}>
+        X
+      </button>
     </div>
   );
 }
@@ -196,13 +203,15 @@ function AddTodo() {
             value={input}
             onChange={handleInputChange}
           />
-          <button
-            type="submit"
-            className={buttonStyles.buttonSubmit}
-            style={{ borderLeft: 0 }}
-          >
-            Submit
-          </button>
+          {input && (
+            <button
+              type="submit"
+              className={buttonStyles.buttonSubmit}
+              style={{ borderLeft: 0 }}
+            >
+              Submit
+            </button>
+          )}
         </form>
       </div>
     </>
@@ -232,18 +241,16 @@ const TodoMoveOptions = ({ currentIndex }) => {
 
   return (
     <div className={styles.moveOptionsContainer}>
-      <p
-        onClick={moveBack}
-        style={{ display: currentIndex <= 0 ? "none" : "" }}
-      >
-        {"<-"}
-      </p>
-      <p
-        onClick={moveNext}
-        style={{ display: currentIndex >= lists.length - 1 ? "none" : "" }}
-      >
-        {"->"}
-      </p>
+      {!(currentIndex <= 0) && (
+        <p onClick={moveBack} className={styles.moveOptionsArrows}>
+          {"<-"}
+        </p>
+      )}
+      {!(currentIndex >= lists.length - 1) && (
+        <p onClick={moveNext} className={styles.moveOptionsArrows}>
+          {"->"}
+        </p>
+      )}
     </div>
   );
 };
