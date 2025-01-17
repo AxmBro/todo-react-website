@@ -14,7 +14,7 @@ function TodoContainer() {
           Simple todo website created using react and vite. All created lists
           and content inside is saved using local storage.
         </p>
-        <h1 style={{paddingTop: "2rem"}}>Lists:</h1>
+        <h1 style={{ paddingTop: "2rem" }}>Lists:</h1>
         <AddTodo />
         <div className={styles.todoGridContainer}>
           {lists.map((list, index) => {
@@ -79,9 +79,10 @@ function TodoItem({ localStoragePrefix, title, listId, index }) {
     <>
       <div className={styles.todoContainer}>
         <div className={styles.titleContainer}>
-          <h2 className={styles.title}>{`${
-            index + 1
-          }. ${title}, ID: ${listId}`}</h2>
+          <h2 className={styles.title}>
+            {`${index + 1}. ${title}, ID: ${listId}`}{" "}
+            <span className={styles.idText}>{`ID: ${listId}`}</span>
+          </h2>
           <div className={styles.titleButtonsContainer}>
             <TodoMoveOptions currentIndex={index} />
             <button onClick={handleRemoveList} className={styles.XButton}>

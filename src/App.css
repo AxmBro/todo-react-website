@@ -27,3 +27,7 @@ li {
 main {
   width: clamp(0px, 100rem, 100%);
 }
+
+p {
+  font-weight: 500;
+}
