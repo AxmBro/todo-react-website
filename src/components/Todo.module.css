@@ -113,6 +113,16 @@
   color: red;
 }
 
+.titleContainer .title {
+  word-break: break-all;
+}
+
+.titleButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
 .addTodo {
   padding-top: 0.5rem;
 }
@@ -139,4 +149,21 @@
 
 p {
   margin: 0;
+}
+
+.moveOptionsContainer {
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.moveOptionsContainer > * {
+  margin: 0.25rem 0;
+  flex-shrink: 0;
+}
+
+.moveOptionsContainer > *:hover {
+  cursor: pointer;
+  color: red;
 }

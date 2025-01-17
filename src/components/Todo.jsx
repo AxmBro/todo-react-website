@@ -8,17 +8,23 @@ function TodoContainer() {
     <>
       <div className={styles.headerContainer}>
         <h1 className={styles.header}>ToDo Lists:</h1>
-        <p>Simple todo website created using react and vite. All created lists and content inside is saved using local storage.</p>
+        <p>
+          Simple todo website created using react and vite. All created lists
+          and content inside is saved using local storage.
+        </p>
         <AddTodo />
         <div className={styles.todoGridContainer}>
-          {lists.map((list) => {
+          {lists.map((list, index) => {
             return (
-              <TodoItem
-                key={`${list.name}${list.id}`}
-                title={list.name}
-                listId={list.id}
-                localStoragePrefix={`${list.name}${list.id}`}
-              />
+              <>
+                <TodoItem
+                  key={`${list.name}${list.id}`}
+                  title={list.name}
+                  listId={list.id}
+                  index={index}
+                  localStoragePrefix={`${list.name}${list.id}`}
+                />
+              </>
             );
           })}
         </div>
@@ -27,7 +33,7 @@ function TodoContainer() {
   );
 }
 
-function TodoItem({ localStoragePrefix, title, listId }) {
+function TodoItem({ localStoragePrefix, title, listId, index }) {
   const { lists, setLists } = useContext(ListsContext);
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useState(() => {
@@ -72,8 +78,11 @@ function TodoItem({ localStoragePrefix, title, listId }) {
     <>
       <div className={styles.todoContainer}>
         <div className={styles.titleContainer}>
-          <h2>{`${title}: `}</h2>
-          <button onClick={handleRemoveList}>X</button>
+          <h2 className={styles.title}>{`${title}: `}</h2>
+          <div className={styles.titleButtonsContainer}>
+            <TodoMoveOptions currentIndex={index} />
+            <button onClick={handleRemoveList}>X</button>
+          </div>
         </div>
         <div className={styles.todoAddNewTaskContainer}>
           <input
@@ -180,5 +189,46 @@ function AddTodo() {
     </>
   );
 }
+
+const TodoMoveOptions = ({ currentIndex }) => {
+  const { lists, setLists } = useContext(ListsContext);
+
+  const moveNext = () => {
+    if (currentIndex < lists.length - 1) {
+      const updatedLists = [...lists];
+      const [movedItem] = updatedLists.splice(currentIndex, 1);
+      updatedLists.splice(currentIndex + 1, 0, movedItem);
+      setLists(updatedLists);
+    }
+  };
+
+  const moveBack = () => {
+    if (currentIndex > 0) {
+      const updatedLists = [...lists];
+      const [movedItem] = updatedLists.splice(currentIndex, 1);
+      updatedLists.splice(currentIndex - 1, 0, movedItem);
+      setLists(updatedLists);
+    }
+  };
+
+  return (
+    <div className={styles.moveOptionsContainer}>
+      <p
+        onClick={moveBack}
+        disabled={currentIndex <= 0}
+        style={{ display: currentIndex <= 0 ? "none" : "" }}
+      >
+        {"<-"}
+      </p>
+      <p
+        onClick={moveNext}
+        disabled={currentIndex >= lists.length - 1}
+        style={{ display: currentIndex >= lists.length - 1 ? "none" : "" }}
+      >
+        {"->"}
+      </p>
+    </div>
+  );
+};
 
 export { TodoContainer };
