@@ -9,7 +9,10 @@ function App() {
     const lists = localStorage.getItem("lists");
     return lists
       ? JSON.parse(lists)
-      : localStorage.setItem("lists", JSON.stringify([]));
+      : localStorage.setItem(
+          "lists",
+          JSON.stringify([{ id: 1, name: "E.g. Work" }])
+        );
   });
   return (
     <>
