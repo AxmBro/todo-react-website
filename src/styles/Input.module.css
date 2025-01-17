@@ -1,0 +1,14 @@
+.inputText {
+  color: rgb(255, 255, 255);
+  height: 2rem;
+  margin: 0;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  background-color: rgb(18, 18, 18);
+  border: 1px solid rgb(40, 40, 40);
+}
+
+.inputText:focus-visible {
+  position: relative;
+  z-index: 5;
+}

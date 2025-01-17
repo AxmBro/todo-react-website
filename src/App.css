@@ -17,10 +17,5 @@ li {
 }
 
 main {
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
-
-/* *:focus {
-  background-color: red !important;
-  border: 1px red solid !important;
-} */

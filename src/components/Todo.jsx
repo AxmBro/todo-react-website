@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
-import styles from "./Todo.module.css";
 import { ListsContext } from "../contexts/ListsContext";
+import styles from "./Todo.module.css";
+import inputStyles from "../styles/Input.module.css";
+import buttonStyles from "../styles/Button.module.css";
 
 function TodoContainer() {
   const { lists } = useContext(ListsContext);
@@ -16,15 +18,13 @@ function TodoContainer() {
         <div className={styles.todoGridContainer}>
           {lists.map((list, index) => {
             return (
-              <>
-                <TodoItem
-                  key={`${list.name}${list.id}`}
-                  title={list.name}
-                  listId={list.id}
-                  index={index}
-                  localStoragePrefix={`${list.name}${list.id}`}
-                />
-              </>
+              <TodoItem
+                key={`${list.name}${list.id}`}
+                title={list.name}
+                listId={list.id}
+                index={index}
+                localStoragePrefix={`${list.name}${list.id}`}
+              />
             );
           })}
         </div>
@@ -78,23 +78,34 @@ function TodoItem({ localStoragePrefix, title, listId, index }) {
     <>
       <div className={styles.todoContainer}>
         <div className={styles.titleContainer}>
-          <h2 className={styles.title}>{`${title}: `}</h2>
+          <h2 className={styles.title}>{`${
+            index + 1
+          }. ${title}, ID: ${listId}`}</h2>
           <div className={styles.titleButtonsContainer}>
             <TodoMoveOptions currentIndex={index} />
             <button onClick={handleRemoveList}>X</button>
           </div>
         </div>
         <div className={styles.todoAddNewTaskContainer}>
-          <input
-            placeholder="Add new task"
-            className={styles.todoAddNewTaskInput}
-            type="text"
-            name={`input${localStoragePrefix}`}
-            id={`title${localStoragePrefix}`}
-            value={input}
-            onChange={handleChangeInput}
-          />
-          <button onClick={handleAddTask}>submit</button>
+          <div className={styles.todoAddNewTaskInputWrapper}>
+            <input
+              placeholder="Add new task"
+              style={{ width: "100%" }}
+              className={inputStyles.inputText}
+              type="text"
+              name={`input${localStoragePrefix}`}
+              id={`title${localStoragePrefix}`}
+              value={input}
+              onChange={handleChangeInput}
+            />
+          </div>
+          <button
+            onClick={handleAddTask}
+            className={buttonStyles.buttonSubmit}
+            style={{ borderLeft: 0 }}
+          >
+            Add
+          </button>
         </div>
         {tasks && (
           <ul className={styles.ul}>
@@ -174,16 +185,24 @@ function AddTodo() {
 
   return (
     <>
-      <div className={styles.addTodo}>
+      <div className={styles.addTodoContainer}>
         <form action="" onSubmit={addNewList}>
           <input
+            className={inputStyles.inputText}
+            style={{ width: "100%" }}
             placeholder="Add New Todo List"
             type="text"
             name="addNewTodo"
             value={input}
             onChange={handleInputChange}
           />
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className={buttonStyles.buttonSubmit}
+            style={{ borderLeft: 0 }}
+          >
+            Submit
+          </button>
         </form>
       </div>
     </>
@@ -215,14 +234,12 @@ const TodoMoveOptions = ({ currentIndex }) => {
     <div className={styles.moveOptionsContainer}>
       <p
         onClick={moveBack}
-        disabled={currentIndex <= 0}
         style={{ display: currentIndex <= 0 ? "none" : "" }}
       >
         {"<-"}
       </p>
       <p
         onClick={moveNext}
-        disabled={currentIndex >= lists.length - 1}
         style={{ display: currentIndex >= lists.length - 1 ? "none" : "" }}
       >
         {"->"}
